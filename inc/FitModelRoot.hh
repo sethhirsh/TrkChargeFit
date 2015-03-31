@@ -6,9 +6,10 @@
 
 
 namespace mu2e{
+
 namespace TrkChargeReco{
-namespace FitModelRoot
-{
+
+namespace FitModelRoot{
 
 	Float_t dynamicPedestalTrunc(Double_t *x, Double_t *par);
 

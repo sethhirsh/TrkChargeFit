@@ -9,8 +9,8 @@ namespace mu2e{
 
 namespace TrkChargeReco{
 
-namespace FitModel
-{
+namespace FitModel{
+
   Float_t dynamicPedestal(const Double_t t, const DynamicPedestalParamStruct &fitParams, const ConfigStruct &initParams);
   
   Float_t fixedTruncation(const Float_t currentFunctionValue, const ConfigStruct &initParams);
@@ -18,9 +18,9 @@ namespace FitModel
   // Shaping power set to 1
   Float_t unConvolvedSinglePeak(const Double_t t, const ConfigStruct &initParams);
 
-	// Note that this is a convolution with a uniform distribution
-	//2 Parameters (shaping power set to 1.0)
-	//par[0] - sigma
+  // Note that this is a convolution with a uniform distribution
+  //2 Parameters (shaping power set to 1.0)
+  //par[0] - sigma
   Float_t convolvedSinglePeak(const Double_t t, const Double_t sigma, const ConfigStruct &initParams);
 
   //Fitting function for current Function2

@@ -16,7 +16,7 @@ struct resultantPeakData
   Float_t _peakTime; // time of peak relative to 140.0 ns interval
   Float_t _peakHeight; // in units of bits
 
-  // Default constructor - should probably be deleted
+  // Default constructor 
   resultantPeakData() : _peakTime(0.0), _peakHeight(0.0){};
 
   // True constructor

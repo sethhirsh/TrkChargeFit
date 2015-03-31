@@ -3,10 +3,15 @@
 
 #include "TrkChargeReco/inc/PeakFitRootBase.hh"
 
+// PeakFit classes 
+// To perform fit call the process method
+
 namespace mu2e {
 
 namespace TrkChargeReco {
 
+
+// Computes reconstructed energy by summing adc values and subtracting two presamples
 class SumADC : public PeakFitRootBase{
 	public:
 		SumADC(const ConfigStruct &initParams) : PeakFitRootBase(initParams){};
@@ -14,17 +19,17 @@ class SumADC : public PeakFitRootBase{
 		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
 };
 
-
 class SinglePeakFit : public PeakFitRootBase{
 	public:
 		// SinglePeakFit normal constructor with ConfigStruct initilization parameters
 		SinglePeakFit(const ConfigStruct &initParams);
 
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
-		// NOTE : This function may begin with peak data provided in result which is replaced
 		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
 
 	protected:
+
+		// Convert parameters from fit to resultantHitData object
 		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
 };
 
@@ -34,10 +39,10 @@ class SinglePeakFloatingPedestalFit : public PeakFitRootBase{
 		SinglePeakFloatingPedestalFit(const ConfigStruct &initParams);
 
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
-		// NOTE : This function may begin with peak data provided in result which is replaced
 		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
 
 	protected:
+
 		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
 };
 
@@ -49,13 +54,12 @@ class EXPeakFit : public PeakFitRootBase{
 		EXPeakFit(const ConfigStruct &initParams);
 
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
-		// NOTE : This function may begin with peak data provided in result which is replaced
 		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
 
 	protected:
 
+		// Convert parameters from fit to resultantHitData object
 		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
-
 };
 
 class LXPeakFit : public PeakFitRootBase{
@@ -63,11 +67,11 @@ class LXPeakFit : public PeakFitRootBase{
 		LXPeakFit(const ConfigStruct &initParams);
 
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
-		// NOTE : This function may begin with peak data provided in result which is replaced
 		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
 
 	protected:
 
+		// Convert parameters from fit to resultantHitData object
 		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
 };
 
@@ -77,11 +81,11 @@ class ELXPeakFit : public PeakFitRootBase{
 		ELXPeakFit(const ConfigStruct &initParams);
 
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
-		// NOTE : This function may begin with peak data provided in result which is replaced
 		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
 
 	protected:
 
+		// Convert parameters from fit to resultantHitData object
 		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
 };
 
@@ -92,7 +96,6 @@ class ComboPeakFit : public PeakFitRootBase{
 		ComboPeakFit(const ConfigStruct &initParams) : PeakFitRootBase(initParams){};
 		
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
-		// NOTE : This function may begin with peak data provided in result which is replaced
 		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result); 
 
 };

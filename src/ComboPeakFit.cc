@@ -6,8 +6,10 @@
 // TODO : ADD CLASS LXPeakFitWithConstantPedestal
 
 //SumADC::SumADC(const ConfigStruct &initParams) : PeakFitRootBase(initParams){}
-namespace mu2e{
-namespace TrkChargeReco{
+namespace mu2e {
+
+namespace TrkChargeReco {
+
 void SumADC::process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result)
 {
  	int sum = 0;
@@ -26,21 +28,16 @@ void SumADC::process(const adcWaveform adcData, const resultantHitData &initialG
 	result[0] = peakData;
 }
 
-
-
-
 // SinglePeakFit normal constructor with ConfigStruct initilization parameters
 SinglePeakFit::SinglePeakFit(const ConfigStruct &initParams) : PeakFitRootBase(initParams)
 {
   _fitModel = TF1("fitModel",FitModelRoot::convolutionSinglePeakTrunc,0.0,_initParams._hitPeriod,3);
 }
 
-
 // Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
 // NOTE : This function may begin with peak data provided in result which is replaced
 void SinglePeakFit::process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result)
 {
-
 	// Set initial fit parameters
 	const double timeshift = 30.0;
 	const double scalingFactor = TMath::Max((initialGuess[0]._peakHeight - _initParams._defaultPedestal) * _initParams._bits2scalingFactor, 1000.0);
@@ -54,7 +51,6 @@ void SinglePeakFit::process(const adcWaveform adcData, const resultantHitData &i
 	fitParams2ResultantData(finalParameters, result);
 }
 
-
 void SinglePeakFit::fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result)
 {
 	resultantPeakData peakData;
@@ -66,13 +62,11 @@ void SinglePeakFit::fitParams2ResultantData(const Double_t *fitParameters, resul
 	result[0] = peakData;
 }	
 
-
 // SinglePeakFloatingPedestalFit normal constructor with ConfigStruct initilization parameters
 SinglePeakFloatingPedestalFit::SinglePeakFloatingPedestalFit(const ConfigStruct &initParams) : PeakFitRootBase(initParams)
 {
   _fitModel = TF1("fitModel",FitModelRoot::convolutionSinglePeakWithConstantPedestalTrunc,0.0,_initParams._hitPeriod,4);
 }
-
 
 // Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
 // NOTE : This function may begin with peak data provided in result which is replaced
@@ -92,7 +86,6 @@ void SinglePeakFloatingPedestalFit::process(const adcWaveform adcData, const res
 	fitParams2ResultantData(finalParameters, result);
 }
 
-
 void SinglePeakFloatingPedestalFit::fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result)
 {
 	resultantPeakData peakData;
@@ -104,7 +97,6 @@ void SinglePeakFloatingPedestalFit::fitParams2ResultantData(const Double_t *fitP
 	result[0] = peakData;
 }	
 
-
 // EXPeakFit normal constructor with ConfigStruct initilization parameters
 EXPeakFit::EXPeakFit(const ConfigStruct &initParams) : PeakFitRootBase(initParams)
 {
@@ -115,7 +107,6 @@ EXPeakFit::EXPeakFit(const ConfigStruct &initParams) : PeakFitRootBase(initParam
 // NOTE : This function may begin with peak data provided in result which is replaced
 void EXPeakFit::process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result)
 {
-
 	// Set initial fit parameters
 	const double timeshift = 30.0;
 	const double scalingFactor = TMath::Max((initialGuess[1]._peakHeight - _initParams._defaultPedestal) * _initParams._bits2scalingFactor, 1000.0);
@@ -147,9 +138,7 @@ void EXPeakFit::fitParams2ResultantData(const Double_t *fitParameters, resultant
 
 	result[0] = dynamicPedestalData;
 	result[1] = peakData;
-
 }
-
 
 LXPeakFit::LXPeakFit(const ConfigStruct &initParams) : PeakFitRootBase(initParams)
 {
@@ -232,7 +221,6 @@ void LXPeakFitWithConstantPedestal::fitParams2ResultantData(const Double_t *fitP
 	result[1] = secondPeakData;
 }
 **/
-
 
 // ELXPeakFit normal constructor with ConfigStruct initilization parameters
 ELXPeakFit::ELXPeakFit(const ConfigStruct &initParams) : PeakFitRootBase(initParams)
@@ -324,7 +312,6 @@ void ComboPeakFit::process(const adcWaveform adcData, const resultantHitData &in
 			LXPeakFit doublePeak(_initParams);
 			doublePeak.process(adcData, initialGuess, result);
 		}
-
 	}	
 }
 }
