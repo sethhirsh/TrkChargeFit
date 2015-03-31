@@ -2,10 +2,12 @@
 #define FitModel_hh
 
 #include "TMath.h"
-#include "ParamStructs.hh"
-#include "ConfigStruct.hh"
+#include "TrkChargeReco/inc/ParamStructs.hh"
+#include "TrkChargeReco/inc/ConfigStruct.hh"
 
 namespace mu2e{
+
+namespace TrkChargeReco{
 
 namespace FitModel
 {
@@ -82,6 +84,7 @@ namespace FitModel
 
   Float_t doublePeakWithDynamicPedestalTrunc(const Double_t t, const DoublePeakWithDynamicPedestalParamStruct &fitParams, const ConfigStruct &initParams);
 
+}
 }
 }
 #endif

@@ -2,10 +2,11 @@
 #define FitModelRoot_hh
 
 #include "TMath.h"
-#include "ConfigStruct.hh" // PROBABLY GET RID OF THIS INCLUDE STATEMENT EVENTUALLY
+#include "TrkChargeReco/inc/ConfigStruct.hh" // PROBABLY GET RID OF THIS INCLUDE STATEMENT EVENTUALLY
 
 
-namespace Mu2e{
+namespace mu2e{
+namespace TrkChargeReco{
 namespace FitModelRoot
 {
 
@@ -61,6 +62,7 @@ namespace FitModelRoot
 	// Par3 - shift in 2nd peak minus shift in 1st peak
 	// Par4 - scaling factor 2nd peak
 	Float_t doublePeakWithDynamicPedestalTrunc(Double_t *x, Double_t *par);
+}
 }
 }
 #endif

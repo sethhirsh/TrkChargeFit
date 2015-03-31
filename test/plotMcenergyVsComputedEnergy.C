@@ -1,6 +1,6 @@
 {
 		
-	TFile f("Mu2e3/test/FitDataElectron.root");
+	TFile f("TrkChargeReco/test/FitDataElectron.root");
 	TTree* electronFitData = (TTree*) gDirectory->Get("FitTree");
 	electronFitData->Draw("computedEnergy:mcenergy*1000","computedEnergy>0&&computedEnergy<1023&&mcenergy*1000<40");
 	htemp->SetTitle("Reconstructed Energy vs. MC Energy");

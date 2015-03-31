@@ -5,7 +5,8 @@
 
 
 //TODO : FINISH TRUNCATION FIT FUNCTIONS
-namespace Mu2e{
+namespace mu2e{
+namespace TrkChargeReco{
 namespace FitModel
 {
 
@@ -193,5 +194,6 @@ namespace FitModel
   }
 
 
+}
 }
 }

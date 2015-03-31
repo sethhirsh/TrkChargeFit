@@ -3,7 +3,9 @@
 #include "TrkChargeReco/inc/FitModel.hh"
 
 
-namespace Mu2e
+namespace mu2e
+{
+namespace TrkChargeReco
 {
 namespace FitModelRoot
 {
@@ -127,5 +129,6 @@ namespace FitModelRoot
   		return FitModel::doublePeakWithDynamicPedestalTrunc(x[0],parStruct,fitInitParams);
 	}
 
+}
 }
 }

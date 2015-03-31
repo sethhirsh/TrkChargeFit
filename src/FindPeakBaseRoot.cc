@@ -1,7 +1,8 @@
 #include "TrkChargeReco/inc/FindPeakBaseRoot.hh"
 
 
-namespace Mu2e{
+namespace mu2e{
+namespace TrkChargeReco{
 // Fits a model function to a waveform
 // Note: It is assumed that the waveform being fitted is normalized. 
 // Thus, the scaling factor parameter which is passed in must be not in units of bits but scaled to this normaliztion
@@ -126,5 +127,6 @@ void FindPeakBaseRoot::findPeaks(const TGraphErrors &gr, const ConfigStruct &ini
 		initialGuess.push_back(peakData);
 		++ientry;
 		}
+}
 }
 }

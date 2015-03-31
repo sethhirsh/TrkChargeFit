@@ -1,13 +1,16 @@
 #ifndef FindPeakBaseRoot_hh
 #define FindPeakBaseRoot_hh
 
-#include "FindPeakBase.hh"
+#include "TrkChargeReco/inc/FindPeakBase.hh"
 #include "TF1.h"
 #include "TGraphErrors.h"
-#include "ParamStructs.hh"
-#include "FitModelRoot.hh"
+#include "TrkChargeReco/inc/ParamStructs.hh"
+#include "TrkChargeReco/inc/FitModelRoot.hh"
 
-namespace Mu2e{
+namespace mu2e{
+
+namespace TrkChargeReco{
+
 class FindPeakBaseRoot : public FindPeakBase{
 	public:
 
@@ -43,5 +46,6 @@ class FindPeakBaseRoot : public FindPeakBase{
 	
 
 };
+}
 }
 #endif

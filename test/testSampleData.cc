@@ -1,17 +1,16 @@
-#include "Mu2e3/inc/FindMultiplePeak.hh"
+#include "TrkChargeReco/inc/FindMultiplePeak.hh"
 #include <iostream>
-#include "Mu2e3/inc/FitModelRoot.hh"
-#include "Mu2e3/inc/FindPeakComparison.hh"
+#include "TrkChargeReco/inc/FitModelRoot.hh"
+#include "TrkChargeReco/inc/FindPeakComparison.hh"
 #include "TF1.h"
 #include "TTree.h"
 #include "TFile.h"
 
-using namespace Mu2e;
-
+using namespace mu2e::TrkChargeReco;
 void testSampleData()
 {
  	// Load Sample Data 
-	TFile f("Mu2e3/test/electronData25ns_8.root");
+	TFile f("TrkChargeReco/test/electronData25ns_8.root");
 	TTree *treeData = (TTree*) gDirectory->Get("sddiag");
 
 	const ConfigStruct initParams;	
@@ -32,7 +31,7 @@ void testSampleData()
 	Double_t computedEnergy;
 	
 	// Create ttree for fit data
-	TFile newfile = TFile("Mu2e3/test/FitDataElectronSinglePeakWithoutTrunc.root","RECREATE");
+	TFile newfile = TFile("TrkChargeReco/test/FitDataElectron.root","RECREATE");
 	TTree fitData = TTree("FitTree","FitTree");	
 	fitData.Branch("peakNum",&peakNum);
 	fitData.Branch("peakHeight",&peakHeight);
@@ -91,7 +90,7 @@ void testSampleData()
 void sampleGraph(const int num)
 {
  	// Load Sample Data 
-	TFile f("Mu2e3/test/protonData25ns_8.root");
+	TFile f("TrkChargeReco/test/protonData25ns_8.root");
 	TTree *treeData = (TTree*) gDirectory->Get("sddiag");
 
 	const ConfigStruct initParams;	

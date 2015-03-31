@@ -5,6 +5,7 @@
 
 namespace mu2e{
 
+namespace TrkChargeReco{
 // This struct contains all parameters which remain constant throughout the simulation
 struct ConfigStruct{
     const Double_t _shapingTime; // Shaping time (in units of ns)
@@ -39,4 +40,5 @@ struct ConfigStruct{
 };
 
 } 
+}
 #endif

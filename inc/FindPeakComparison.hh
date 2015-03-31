@@ -1,9 +1,12 @@
 #ifndef FindPeakComparison_hh
 #define FindPeakComparison_hh
 
-#include "Mu2e3/inc/FindMultiplePeak.hh"
+#include "TrkChargeReco/inc/FindMultiplePeak.hh"
 
-namespace Mu2e{
+namespace mu2e{
+
+namespace TrkChargeReco{
+
 class FindSinglePeakWithoutTrunc : public FindSinglePeak{
 	public:
 		// FindSinglePeak normal constructor with ConfigStruct initilization parameters
@@ -22,5 +25,6 @@ class  FindDoublePeakVsSinglePeak : public FindPeakBaseRoot{
 
 		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
 };
+}
 }
 #endif
