@@ -1,4 +1,4 @@
-#include "TrkChargeReco/inc/FindPeakBaseRoot.hh"
+#include "TrkChargeReco/inc/PeakFitRootBase.hh"
 
 
 namespace mu2e{
@@ -7,7 +7,7 @@ namespace TrkChargeReco{
 // Note: It is assumed that the waveform being fitted is normalized. 
 // Thus, the scaling factor parameter which is passed in must be not in units of bits but scaled to this normaliztion
 // This can be done by multiplying by the _bits2scalingfactor conversion factor
-void FindPeakBaseRoot::fitModel2NormalizedWaveform(TF1 &fitModel, TGraphErrors &fitData, const Double_t *initialParameters, Double_t *fitParameters)
+void PeakFitRootBase::fitModel2NormalizedWaveform(TF1 &fitModel, TGraphErrors &fitData, const Double_t *initialParameters, Double_t *fitParameters)
 {
 	// These lines will be replaced with the chi-square minimization
 	TF1 *fitModelPtr = &fitModel; 
@@ -27,7 +27,7 @@ void FindPeakBaseRoot::fitModel2NormalizedWaveform(TF1 &fitModel, TGraphErrors &
 
 
 // Converts adcWaveform object to TGraphErrors object for easier manipulation in ROOT
-void FindPeakBaseRoot::adcWaveform2TGraphErrors(const adcWaveform adcData, TGraphErrors &fitData)
+void PeakFitRootBase::adcWaveform2TGraphErrors(const adcWaveform adcData, TGraphErrors &fitData)
 {
 	Double_t adcDataTemp[_initParams._numSamplesPerHit];
 	Double_t measurementTimes[_initParams._numSamplesPerHit];
@@ -45,7 +45,7 @@ void FindPeakBaseRoot::adcWaveform2TGraphErrors(const adcWaveform adcData, TGrap
 	fitData = TGraphErrors(_initParams._numSamplesPerHit,measurementTimes,adcDataTemp,measurementTimesErrors,adcDataErrors);
 }
 
-void FindPeakBaseRoot::initialPeakGuess(const adcWaveform adcData, resultantHitData &initialGuess)
+void PeakFitRootBase::initialPeakGuess(const adcWaveform adcData, resultantHitData &initialGuess)
 {
 	adcWaveform2TGraphErrors(adcData, _fitData);
 	findPeaks(_fitData,_initParams, initialGuess);
@@ -60,26 +60,26 @@ void FindPeakBaseRoot::initialPeakGuess(const adcWaveform adcData, resultantHitD
 // This function searches for another peak in the waveform data by subtracting out a dynamic pedestal 
 // from the adc waveform and finding the maximum adc value in the "subtracted data".
 // This function is applied when no peak is found in the explicit peak search (findPeaks).
-void FindPeakBaseRoot::dynamicPedestalAddPeak(const TGraphErrors &gr, resultantHitData &initialGuess)
+void PeakFitRootBase::dynamicPedestalAddPeak(const TGraphErrors &gr, resultantHitData &initialGuess)
 {	
 	// This maybe could be done using linear algebra vectors
 	// instead of arrays
 	const Double_t *adcValues = gr.GetY();
 	const Double_t *measurementTimes = gr.GetX();
-	Double_t subtractedValues[FindPeakBase::_initParams._numSamplesPerHit];
+	Double_t subtractedValues[PeakFitBase::_initParams._numSamplesPerHit];
 
 	Double_t dynamicPedestalParam[1] = {adcValues[0]};
 	Double_t dynamicPedestalX[1];
 
-	for (int i = 0; i < FindPeakBase::_initParams._numSamplesPerHit; ++i)
+	for (int i = 0; i < PeakFitBase::_initParams._numSamplesPerHit; ++i)
 	{
 		dynamicPedestalX[0] = measurementTimes[i];
 		subtractedValues[i] = adcValues[i] - FitModelRoot::dynamicPedestalTrunc(dynamicPedestalX, dynamicPedestalParam);
 	}
 
 	// New peak is max value of difference between of adc values and dynamic pedestal
-	const Float_t newAdcPeak = TMath::MaxElement(FindPeakBase::_initParams._numSamplesPerHit, subtractedValues);
-	const Float_t newTPeak = TMath::LocMax(FindPeakBase::_initParams._numSamplesPerHit, subtractedValues);
+	const Float_t newAdcPeak = TMath::MaxElement(PeakFitBase::_initParams._numSamplesPerHit, subtractedValues);
+	const Float_t newTPeak = TMath::LocMax(PeakFitBase::_initParams._numSamplesPerHit, subtractedValues);
 
 	resultantPeakData newPeakData(newTPeak, newAdcPeak);
 	initialGuess.push_back(newPeakData);
@@ -87,7 +87,7 @@ void FindPeakBaseRoot::dynamicPedestalAddPeak(const TGraphErrors &gr, resultantH
 
 
 // Performs explicit peak search on adc waveform data
-void FindPeakBaseRoot::findPeaks(const TGraphErrors &gr, const ConfigStruct &initParams, resultantHitData &initialGuess, const double sigma)
+void PeakFitRootBase::findPeaks(const TGraphErrors &gr, const ConfigStruct &initParams, resultantHitData &initialGuess, const double sigma)
 {
 		int ientry = 0; // Start time at 0
 		const double *measurementTimes = gr.GetX();

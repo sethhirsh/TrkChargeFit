@@ -5,10 +5,11 @@
 
 
 //TODO : FINISH TRUNCATION FIT FUNCTIONS
-namespace mu2e{
-namespace TrkChargeReco{
-namespace FitModel
-{
+namespace mu2e {
+
+namespace TrkChargeReco {
+
+namespace FitModel {
 
   Float_t dynamicPedestal(const Double_t t, const DynamicPedestalParamStruct &fitParams, const ConfigStruct &initParams)
   {

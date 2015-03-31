@@ -1,12 +1,12 @@
-#ifndef FindPeakBase_hh
-#define FindPeakBase_hh
+#ifndef PeakFitBase_hh
+#define PeakFitBase_hh
 
 #include "TMath.h"
 #include "TrkChargeReco/inc/ConfigStruct.hh"
 
-namespace mu2e{
+namespace mu2e {
 
-namespace TrkChargeReco{
+namespace TrkChargeReco {
 
 typedef unsigned int * adcWaveform;
 
@@ -26,10 +26,10 @@ struct resultantPeakData
 // This is object top which will be filled by the process method 
 typedef std::vector<resultantPeakData> resultantHitData;
 
-/** \class FindPeakBase
- * Virtual class providing structure for FindSinglePeak, FindDoublePeak, FindMutiplePeaks, etc. 
+/** \class PeakFitBase
+ * Virtual class providing structure for SinglePeakFit, LXPeakFit, ComboPeakFit, etc. 
  */
- class FindPeakBase{
+ class PeakFitBase{
   public:
     
     // Fills result using adc waveform data
@@ -37,10 +37,10 @@ typedef std::vector<resultantPeakData> resultantHitData;
     virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result) = 0;
 
     // Destructor
-    virtual ~FindPeakBase(){}
+    virtual ~PeakFitBase(){}
 
-    // FindPeakBase normal constructor with ConfigStruct initilization parameters
-    FindPeakBase(const ConfigStruct &initParams) : _initParams(initParams){}
+    // PeakFitBase normal constructor with ConfigStruct initilization parameters
+    PeakFitBase(const ConfigStruct &initParams) : _initParams(initParams){}
   protected:
 
     ConfigStruct _initParams; 

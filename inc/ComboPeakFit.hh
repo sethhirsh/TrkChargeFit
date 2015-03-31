@@ -1,24 +1,24 @@
-#ifndef FindMultiplePeak_hh
-#define FindMultiplePeak_hh
+#ifndef ComboPeakFit_hh
+#define ComboPeakFit_hh
 
-#include "TrkChargeReco/inc/FindPeakBaseRoot.hh"
+#include "TrkChargeReco/inc/PeakFitRootBase.hh"
 
-namespace mu2e{
+namespace mu2e {
 
-namespace TrkChargeReco{
+namespace TrkChargeReco {
 
-class SumADC : public FindPeakBaseRoot{
+class SumADC : public PeakFitRootBase{
 	public:
-		SumADC(const ConfigStruct &initParams) : FindPeakBaseRoot(initParams){};
+		SumADC(const ConfigStruct &initParams) : PeakFitRootBase(initParams){};
 
 		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
 };
 
 
-class FindSinglePeak : public FindPeakBaseRoot{
+class SinglePeakFit : public PeakFitRootBase{
 	public:
-		// FindSinglePeak normal constructor with ConfigStruct initilization parameters
-		FindSinglePeak(const ConfigStruct &initParams);
+		// SinglePeakFit normal constructor with ConfigStruct initilization parameters
+		SinglePeakFit(const ConfigStruct &initParams);
 
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
 		// NOTE : This function may begin with peak data provided in result which is replaced
@@ -28,10 +28,10 @@ class FindSinglePeak : public FindPeakBaseRoot{
 		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
 };
 
-class FindSinglePeakWithConstantPedestal : public FindPeakBaseRoot{
+class SinglePeakFloatingPedestalFit : public PeakFitRootBase{
 	public:
-		// FindSinglePeak normal constructor with ConfigStruct initilization parameters
-		FindSinglePeakWithConstantPedestal(const ConfigStruct &initParams);
+		// SinglePeakFit normal constructor with ConfigStruct initilization parameters
+		SinglePeakFloatingPedestalFit(const ConfigStruct &initParams);
 
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
 		// NOTE : This function may begin with peak data provided in result which is replaced
@@ -42,11 +42,11 @@ class FindSinglePeakWithConstantPedestal : public FindPeakBaseRoot{
 };
 
 
-class FindSinglePeakWithDynamicPedestal : public FindPeakBaseRoot{
+class EXPeakFit : public PeakFitRootBase{
 	public:
 
-		// FindSinglePeakWithDynamicPedestal normal constructor with ConfigStruct initilization parameters
-		FindSinglePeakWithDynamicPedestal(const ConfigStruct &initParams);
+		// EXPeakFit normal constructor with ConfigStruct initilization parameters
+		EXPeakFit(const ConfigStruct &initParams);
 
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
 		// NOTE : This function may begin with peak data provided in result which is replaced
@@ -58,23 +58,9 @@ class FindSinglePeakWithDynamicPedestal : public FindPeakBaseRoot{
 
 };
 
-class FindDoublePeak : public FindPeakBaseRoot{
+class LXPeakFit : public PeakFitRootBase{
 	public:
-		FindDoublePeak(const ConfigStruct &initParams);
-
-		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
-		// NOTE : This function may begin with peak data provided in result which is replaced
-		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
-
-	protected:
-
-		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
-};
-
-class FindDoublePeakWithDynamicPedestal : public FindPeakBaseRoot{
-	public:
-		// FindDoublePeakWithDynamicPedestal normal constructor with ConfigStruct initilization parameters
-		FindDoublePeakWithDynamicPedestal(const ConfigStruct &initParams);
+		LXPeakFit(const ConfigStruct &initParams);
 
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
 		// NOTE : This function may begin with peak data provided in result which is replaced
@@ -85,11 +71,25 @@ class FindDoublePeakWithDynamicPedestal : public FindPeakBaseRoot{
 		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
 };
 
-class FindMultiplePeaks : public FindPeakBaseRoot{
+class ELXPeakFit : public PeakFitRootBase{
+	public:
+		// ELXPeakFit normal constructor with ConfigStruct initilization parameters
+		ELXPeakFit(const ConfigStruct &initParams);
+
+		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
+		// NOTE : This function may begin with peak data provided in result which is replaced
+		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
+
+	protected:
+
+		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
+};
+
+class ComboPeakFit : public PeakFitRootBase{
 	public:
 
-		// FindMultiplePeaks normal constructor with ConfigStruct initilization parameters
-		FindMultiplePeaks(const ConfigStruct &initParams) : FindPeakBaseRoot(initParams){};
+		// ComboPeakFit normal constructor with ConfigStruct initilization parameters
+		ComboPeakFit(const ConfigStruct &initParams) : PeakFitRootBase(initParams){};
 		
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
 		// NOTE : This function may begin with peak data provided in result which is replaced
