@@ -5,7 +5,7 @@
 #include "ParamStructs.hh"
 #include "ConfigStruct.hh"
 
-namespace Mu2e{
+namespace mu2e{
 
 namespace FitModel
 {

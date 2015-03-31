@@ -1,6 +1,6 @@
 #include "TMath.h"
-#include "Mu2e3/inc/ParamStructs.hh"
-#include "Mu2e3/inc/FitModel.hh"
+#include "TrkChargeReco/inc/ParamStructs.hh"
+#include "TrkChargeReco/inc/FitModel.hh"
 #include <iostream>
 
 

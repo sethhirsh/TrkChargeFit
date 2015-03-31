@@ -1,4 +1,4 @@
-#include "Mu2e3/inc/FindPeakBaseRoot.hh"
+#include "TrkChargeReco/inc/FindPeakBaseRoot.hh"
 
 
 namespace Mu2e{

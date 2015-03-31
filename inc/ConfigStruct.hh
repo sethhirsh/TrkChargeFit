@@ -3,7 +3,7 @@
 
 #include "TMath.h"
 
-namespace Mu2e{
+namespace mu2e{
 
 // This struct contains all parameters which remain constant throughout the simulation
 struct ConfigStruct{

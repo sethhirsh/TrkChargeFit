@@ -1,6 +1,6 @@
-#include "Mu2e3/inc/FitModelRoot.hh"
+#include "TrkChargeReco/inc/FitModelRoot.hh"
 #include "TMath.h"
-#include "Mu2e3/inc/FitModel.hh"
+#include "TrkChargeReco/inc/FitModel.hh"
 
 
 namespace Mu2e

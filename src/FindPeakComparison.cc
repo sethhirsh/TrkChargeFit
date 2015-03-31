@@ -1,7 +1,7 @@
 // MAKE SURE THAT initParams is getting passed everywhere correctly 
 
-#include "Mu2e3/inc/FitModelRoot.hh"
-#include "Mu2e3/inc/FindPeakComparison.hh"
+#include "TrkChargeReco/inc/FitModelRoot.hh"
+#include "TrkChargeReco/inc/FindPeakComparison.hh"
 
 // TODO : ADD CLASS FindDoublePeakWithConstantPedestal
 

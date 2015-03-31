@@ -1,9 +1,9 @@
 #ifndef FindMultiplePeak_hh
 #define FindMultiplePeak_hh
 
-#include "Mu2e3/inc/FindPeakBaseRoot.hh"
+#include "TrkChargeReco/inc/FindPeakBaseRoot.hh"
 
-namespace Mu2e{
+namespace mu2e{
 
 class SumADC : public FindPeakBaseRoot{
 	public:
