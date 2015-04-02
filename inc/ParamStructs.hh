@@ -5,12 +5,12 @@ namespace mu2e{
 
 namespace TrkChargeReco{
 
-struct DynamicPedestalParamStruct{
+struct EarlyPeakParamStruct{
    Double_t _Q;
 
-   DynamicPedestalParamStruct(){};
+   EarlyPeakParamStruct(){};
 
-   DynamicPedestalParamStruct(Double_t Q) : _Q(Q){};
+   EarlyPeakParamStruct(Double_t Q) : _Q(Q){};
 };
 
 struct SinglePeakParamStruct
@@ -24,58 +24,58 @@ struct SinglePeakParamStruct
   SinglePeakParamStruct(Double_t shiftedTime, Double_t scalingFactor, Double_t sigma = 0.0) : _shiftedTime(shiftedTime), _scalingFactor(scalingFactor), _sigma(sigma){};
 };
 
-struct SinglePeakWithConstantPedestalParamStruct : SinglePeakParamStruct
+struct SinglePeakFloatingPedestalParamStruct : SinglePeakParamStruct
 {
   Double_t _verticalShift;
 
-  SinglePeakWithConstantPedestalParamStruct(){};
+  SinglePeakFloatingPedestalParamStruct(){};
 
-  SinglePeakWithConstantPedestalParamStruct(Double_t shiftedTime, Double_t scalingFactor, Double_t verticalShift, Double_t sigma) :
+  SinglePeakFloatingPedestalParamStruct(Double_t shiftedTime, Double_t scalingFactor, Double_t verticalShift, Double_t sigma) :
   			SinglePeakParamStruct(shiftedTime, scalingFactor, sigma), _verticalShift(verticalShift){};
 };
 
-struct SinglePeakWithDynamicPedestalParamStruct : SinglePeakParamStruct, DynamicPedestalParamStruct
+struct EXPeakParamStruct : SinglePeakParamStruct, EarlyPeakParamStruct
 {
-  SinglePeakWithDynamicPedestalParamStruct(){};
+  EXPeakParamStruct(){};
 
-	SinglePeakWithDynamicPedestalParamStruct(Double_t shiftedTime, Double_t scalingFactor, Double_t Q, Double_t sigma) : 
-			SinglePeakParamStruct(shiftedTime, scalingFactor, sigma), DynamicPedestalParamStruct(Q){};
+	EXPeakParamStruct(Double_t shiftedTime, Double_t scalingFactor, Double_t Q, Double_t sigma) : 
+			SinglePeakParamStruct(shiftedTime, scalingFactor, sigma), EarlyPeakParamStruct(Q){};
 };
 
-struct DoublePeakParamStruct
+struct LXPeakParamStruct
 {
   Double_t _shiftedTimeFirstPeak;
   Double_t _scalingFactorFirstPeak;
   Double_t _shiftedTimeSecondPeak;
   Double_t _scalingFactorSecondPeak;
 
-  DoublePeakParamStruct(){};
+  LXPeakParamStruct(){};
 
-  DoublePeakParamStruct(Double_t shiftedTimeFirstPeak, Double_t scalingFactorFirstPeak, 
+  LXPeakParamStruct(Double_t shiftedTimeFirstPeak, Double_t scalingFactorFirstPeak, 
   						Double_t shiftedTimeSecondPeak, Double_t scalingFactorSecondPeak) : 
   	_shiftedTimeFirstPeak(shiftedTimeFirstPeak), _scalingFactorFirstPeak(scalingFactorFirstPeak), 
   	_shiftedTimeSecondPeak(shiftedTimeSecondPeak), _scalingFactorSecondPeak(scalingFactorSecondPeak){};
 };
 
 
-struct DoublePeakWithConstantPedestalParamStruct : DoublePeakParamStruct
+struct LXPeakFloatingPedestalParamStruct : LXPeakParamStruct
 {
   Double_t _verticalShift;
 
-  DoublePeakWithConstantPedestalParamStruct(){};
-  DoublePeakWithConstantPedestalParamStruct(Double_t shiftedTimeFirstPeak, Double_t scalingFactorFirstPeak, Double_t verticalShift,
+  LXPeakFloatingPedestalParamStruct(){};
+  LXPeakFloatingPedestalParamStruct(Double_t shiftedTimeFirstPeak, Double_t scalingFactorFirstPeak, Double_t verticalShift,
   						Double_t shiftedTimeSecondPeak, Double_t scalingFactorSecondPeak) :
-  	DoublePeakParamStruct(shiftedTimeFirstPeak, scalingFactorFirstPeak, shiftedTimeSecondPeak, scalingFactorSecondPeak), _verticalShift(verticalShift){};
+  	LXPeakParamStruct(shiftedTimeFirstPeak, scalingFactorFirstPeak, shiftedTimeSecondPeak, scalingFactorSecondPeak), _verticalShift(verticalShift){};
 };
 
-struct DoublePeakWithDynamicPedestalParamStruct : DoublePeakParamStruct, DynamicPedestalParamStruct
+struct DoublePeakWithEarlyPeakParamStruct : LXPeakParamStruct, EarlyPeakParamStruct
 {
-  DoublePeakWithDynamicPedestalParamStruct(){};
+  DoublePeakWithEarlyPeakParamStruct(){};
 
-	DoublePeakWithDynamicPedestalParamStruct(Double_t shiftedTimeFirstPeak, Double_t scalingFactorFirstPeak, Double_t Q,
+	DoublePeakWithEarlyPeakParamStruct(Double_t shiftedTimeFirstPeak, Double_t scalingFactorFirstPeak, Double_t Q,
   						Double_t shiftedTimeSecondPeak, Double_t scalingFactorSecondPeak ) :
-	DoublePeakParamStruct(shiftedTimeFirstPeak, scalingFactorFirstPeak, shiftedTimeSecondPeak, scalingFactorSecondPeak), 
-	DynamicPedestalParamStruct(Q){}
+	LXPeakParamStruct(shiftedTimeFirstPeak, scalingFactorFirstPeak, shiftedTimeSecondPeak, scalingFactorSecondPeak), 
+	EarlyPeakParamStruct(Q){}
 };
 }
 }

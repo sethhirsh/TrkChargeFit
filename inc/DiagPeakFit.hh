@@ -3,9 +3,11 @@
 
 #include "TrkChargeReco/inc/ComboPeakFit.hh"
 
-namespace mu2e{
+// Contains PeakFit classes which should be used for diagnostic purposes
 
-namespace TrkChargeReco{
+namespace mu2e {
+
+namespace TrkChargeReco {
 
 class SinglePeakWithoutTruncFit : public SinglePeakFit{
 	public:

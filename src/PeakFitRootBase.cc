@@ -53,14 +53,14 @@ void PeakFitRootBase::initialPeakGuess(const adcWaveform adcData, resultantHitDa
 	// If there is only one peak and it is a dynamic pedestal
 	// search for and add another peak
 	if (numPeaks == 1 && initialGuess[0]._peakTime == 0.0){
-		dynamicPedestalAddPeak(_fitData, initialGuess);}
+		earlyPeakAddPeak(_fitData, initialGuess);}
 }
 
 
 // This function searches for another peak in the waveform data by subtracting out a dynamic pedestal 
 // from the adc waveform and finding the maximum adc value in the "subtracted data".
 // This function is applied when no peak is found in the explicit peak search (findPeaks).
-void PeakFitRootBase::dynamicPedestalAddPeak(const TGraphErrors &gr, resultantHitData &initialGuess)
+void PeakFitRootBase::earlyPeakAddPeak(const TGraphErrors &gr, resultantHitData &initialGuess)
 {	
 	// This maybe could be done using linear algebra vectors
 	// instead of arrays
@@ -68,13 +68,13 @@ void PeakFitRootBase::dynamicPedestalAddPeak(const TGraphErrors &gr, resultantHi
 	const Double_t *measurementTimes = gr.GetX();
 	Double_t subtractedValues[PeakFitBase::_initParams._numSamplesPerHit];
 
-	Double_t dynamicPedestalParam[1] = {adcValues[0]};
-	Double_t dynamicPedestalX[1];
+	Double_t earlyPeakParam[1] = {adcValues[0]};
+	Double_t earlyPeakX[1];
 
 	for (int i = 0; i < PeakFitBase::_initParams._numSamplesPerHit; ++i)
 	{
-		dynamicPedestalX[0] = measurementTimes[i];
-		subtractedValues[i] = adcValues[i] - FitModelRoot::dynamicPedestalTrunc(dynamicPedestalX, dynamicPedestalParam);
+		earlyPeakX[0] = measurementTimes[i];
+		subtractedValues[i] = adcValues[i] - FitModelRoot::earlyPeakTrunc(earlyPeakX, earlyPeakParam);
 	}
 
 	// New peak is max value of difference between of adc values and dynamic pedestal

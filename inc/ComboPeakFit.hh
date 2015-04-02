@@ -10,7 +10,6 @@ namespace mu2e {
 
 namespace TrkChargeReco {
 
-
 // Computes reconstructed energy by summing adc values and subtracting two presamples
 class SumADC : public PeakFitRootBase{
 	public:
@@ -46,7 +45,6 @@ class SinglePeakFloatingPedestalFit : public PeakFitRootBase{
 		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
 };
 
-
 class EXPeakFit : public PeakFitRootBase{
 	public:
 
@@ -65,6 +63,19 @@ class EXPeakFit : public PeakFitRootBase{
 class LXPeakFit : public PeakFitRootBase{
 	public:
 		LXPeakFit(const ConfigStruct &initParams);
+
+		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
+		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);
+
+	protected:
+
+		// Convert parameters from fit to resultantHitData object
+		void fitParams2ResultantData(const Double_t *fitParameters, resultantHitData &result);
+};
+
+class LXPeakFloatingPedestalFit : public PeakFitRootBase{
+	public:
+		LXPeakFloatingPedestalFit(const ConfigStruct &initParams);
 
 		// Fills result using adc waveform data using by fitting with the convolutionSinglePeakWithDynamicPedestal model
 		virtual void process(const adcWaveform adcData, const resultantHitData &initialGuess, resultantHitData &result);

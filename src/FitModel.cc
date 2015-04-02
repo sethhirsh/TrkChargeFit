@@ -11,7 +11,7 @@ namespace TrkChargeReco {
 
 namespace FitModel {
 
-  Float_t dynamicPedestal(const Double_t t, const DynamicPedestalParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t earlyPeak(const Double_t t, const EarlyPeakParamStruct &fitParams, const ConfigStruct &initParams)
   {
     return fitParams._Q * exp(-t / initParams._shapingTime);
   }
@@ -46,7 +46,7 @@ namespace FitModel {
   {
     	Float_t returnValue = 0.0;
   		
-  		if (sigma == 0.0)
+  	if (sigma == 0.0)
       	{
         		returnValue = unConvolvedSinglePeak(t, initParams);
       	}
@@ -76,7 +76,7 @@ namespace FitModel {
   //par[2] is vertical shift 1st peak
   //par[3] is sigma 1st peak
 
-  Float_t singlePeakWithConstantPedestal(const Double_t t, const SinglePeakWithConstantPedestalParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t singlePeakFloatingPedestal(const Double_t t, const SinglePeakFloatingPedestalParamStruct &fitParams, const ConfigStruct &initParams)
   {
     SinglePeakParamStruct singlePeakFitParams(fitParams._shiftedTime, fitParams._scalingFactor, fitParams._sigma);
     return (Float_t) singlePeak(t, singlePeakFitParams, initParams) + fitParams._verticalShift;
@@ -89,14 +89,14 @@ namespace FitModel {
   // par[3] is sigma
 
   // This should inherit from convolutionSinglePeak not FitModelBase
-  Float_t singlePeakWithDynamicPedestal(const Double_t t, const SinglePeakWithDynamicPedestalParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t EXPeak(const Double_t t, const EXPeakParamStruct &fitParams, const ConfigStruct &initParams)
   {
     SinglePeakParamStruct singlePeakFitParams(fitParams._shiftedTime, fitParams._scalingFactor, fitParams._sigma);
 
-    DynamicPedestalParamStruct dynamicPedestalFitParams(fitParams._Q);
+    EarlyPeakParamStruct earlyPeakFitParams(fitParams._Q);
 
     return (Float_t) singlePeak(t, singlePeakFitParams, initParams) 
-                + dynamicPedestal(t, dynamicPedestalFitParams, initParams);
+                + earlyPeak(t, earlyPeakFitParams, initParams);
   }
 
   // PUT THE DOUBLE_t PEAK FUNCTIONS HERE
@@ -105,7 +105,7 @@ namespace FitModel {
       // Par1 - scalingFactor 1st peak
       // Par2 - shift in 2nd peak minus shift in 1st peak
       // Par3 - scaling factor 2nd peak
-  Float_t doublePeak(const Double_t t, const DoublePeakParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t LXPeak(const Double_t t, const LXPeakParamStruct &fitParams, const ConfigStruct &initParams)
   { 
         // Sigma is set to 0 for each peak
         SinglePeakParamStruct firstPeakFitPar(fitParams._shiftedTimeFirstPeak, fitParams._scalingFactorFirstPeak);
@@ -126,12 +126,12 @@ namespace FitModel {
     // Par2 - vertical shift
     // Par3 - shift in 2nd peak minus shift in 1st peak
     // Par4 - scaling factor 2nd peak
-  Float_t doublePeakWithConstantPedestal(const Double_t t, const DoublePeakWithConstantPedestalParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t LXPeakFloatingPedestal(const Double_t t, const LXPeakFloatingPedestalParamStruct &fitParams, const ConfigStruct &initParams)
   {
-      DoublePeakParamStruct doublePeakFitPar(fitParams._shiftedTimeFirstPeak, fitParams._scalingFactorFirstPeak,
+      LXPeakParamStruct LXPeakFitPar(fitParams._shiftedTimeFirstPeak, fitParams._scalingFactorFirstPeak,
                                       fitParams._shiftedTimeSecondPeak, fitParams._scalingFactorSecondPeak);
 
-      return doublePeak(t, doublePeakFitPar, initParams) + fitParams._verticalShift;
+      return LXPeak(t, LXPeakFitPar, initParams) + fitParams._verticalShift;
   }
 
   // Par0 - shift in X 1st peak
@@ -139,15 +139,15 @@ namespace FitModel {
   // Par2 - Q
   // Par3 - shift in 2nd peak minus shift in 1st peak
   // Par4 - scaling factor 2nd peak
-  Float_t doublePeakWithDynamicPedestal(const Double_t t, const DoublePeakWithDynamicPedestalParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t ELXPeak(const Double_t t, const DoublePeakWithEarlyPeakParamStruct &fitParams, const ConfigStruct &initParams)
   {
-    DoublePeakParamStruct doublePeakFitPar(fitParams._shiftedTimeFirstPeak, fitParams._scalingFactorFirstPeak, 
+    LXPeakParamStruct LXPeakFitPar(fitParams._shiftedTimeFirstPeak, fitParams._scalingFactorFirstPeak, 
                                       fitParams._shiftedTimeSecondPeak, fitParams._scalingFactorSecondPeak);
 
-    DynamicPedestalParamStruct dynamicPedestalFitPar(fitParams._Q);
+    EarlyPeakParamStruct earlyPeakFitPar(fitParams._Q);
 
-    return doublePeak(t, doublePeakFitPar, initParams) 
-        + dynamicPedestal(t, dynamicPedestalFitPar, initParams);
+    return LXPeak(t, LXPeakFitPar, initParams) 
+        + earlyPeak(t, earlyPeakFitPar, initParams);
   }
 
   /**Float_t fitModel2ADC(const Double_t voltageValue, const ConfigStruct &initParams)
@@ -159,9 +159,9 @@ namespace FitModel {
 
   // Apply truncation to necessary fit models
 
-  Float_t dynamicPedestalTrunc(const Double_t t, const DynamicPedestalParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t earlyPeakTrunc(const Double_t t, const EarlyPeakParamStruct &fitParams, const ConfigStruct &initParams)
   {
-    return fixedTruncation(dynamicPedestal(t,fitParams,initParams), initParams);
+    return fixedTruncation(earlyPeak(t,fitParams,initParams), initParams);
   }
 
   Float_t singlePeakTrunc(const Double_t t, const SinglePeakParamStruct &fitParams, const ConfigStruct &initParams)
@@ -169,29 +169,29 @@ namespace FitModel {
     return fixedTruncation(singlePeak(t,fitParams,initParams), initParams);
   }
 
-  Float_t singlePeakWithConstantPedestalTrunc(const Double_t t, const SinglePeakWithConstantPedestalParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t singlePeakFloatingPedestalTrunc(const Double_t t, const SinglePeakFloatingPedestalParamStruct &fitParams, const ConfigStruct &initParams)
   {
-    return fixedTruncation(singlePeakWithConstantPedestal(t,fitParams,initParams), initParams);
+    return fixedTruncation(singlePeakFloatingPedestal(t,fitParams,initParams), initParams);
   }
 
-  Float_t singlePeakWithDynamicPedestalTrunc(const Double_t t, const SinglePeakWithDynamicPedestalParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t EXPeakTrunc(const Double_t t, const EXPeakParamStruct &fitParams, const ConfigStruct &initParams)
   {
-    return fixedTruncation(singlePeakWithDynamicPedestal(t,fitParams,initParams), initParams);
+    return fixedTruncation(EXPeak(t,fitParams,initParams), initParams);
   }
 
-  Float_t doublePeakTrunc(const Double_t t, const DoublePeakParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t LXPeakTrunc(const Double_t t, const LXPeakParamStruct &fitParams, const ConfigStruct &initParams)
   {
-    return fixedTruncation(doublePeak(t,fitParams,initParams), initParams);
+    return fixedTruncation(LXPeak(t,fitParams,initParams), initParams);
   }
 
-  Float_t doublePeakWithConstantPedestalTrunc(const Double_t t, const DoublePeakWithConstantPedestalParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t LXPeakFloatingPedestalTrunc(const Double_t t, const LXPeakFloatingPedestalParamStruct &fitParams, const ConfigStruct &initParams)
   {
-    return fixedTruncation(doublePeakWithConstantPedestal(t,fitParams,initParams), initParams);
+    return fixedTruncation(LXPeakFloatingPedestal(t,fitParams,initParams), initParams);
   }
 
-  Float_t doublePeakWithDynamicPedestalTrunc(const Double_t t, const DoublePeakWithDynamicPedestalParamStruct &fitParams, const ConfigStruct &initParams)
+  Float_t ELXPeakTrunc(const Double_t t, const DoublePeakWithEarlyPeakParamStruct &fitParams, const ConfigStruct &initParams)
   {
-    return fixedTruncation(doublePeakWithDynamicPedestal(t,fitParams,initParams), initParams);
+    return fixedTruncation(ELXPeak(t,fitParams,initParams), initParams);
   }
 
 

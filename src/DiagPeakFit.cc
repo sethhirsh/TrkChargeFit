@@ -3,7 +3,7 @@
 #include "TrkChargeReco/inc/FitModelRoot.hh"
 #include "TrkChargeReco/inc/DiagPeakFit.hh"
 
-// TODO : ADD CLASS LXPeakFitWithConstantPedestal
+// TODO : ADD CLASS LXPeakFitFloatingPedestal
 
 namespace mu2e{
 
@@ -15,10 +15,10 @@ SinglePeakWithoutTruncFit::SinglePeakWithoutTruncFit(const ConfigStruct &initPar
   _fitModel = TF1("fitModel",FitModelRoot::convolutionSinglePeak,0.0,_initParams._hitPeriod,3);
 }
 
-// FindSinglePeakWithConstantPedestal normal constructor with ConfigStruct initilization parameters
+// FindSinglePeakFloatingPedestal normal constructor with ConfigStruct initilization parameters
 SinglePeakFloatingPedestalWithoutTruncFit::SinglePeakFloatingPedestalWithoutTruncFit(const ConfigStruct &initParams) : SinglePeakFloatingPedestalFit(initParams)
 {
-  _fitModel = TF1("fitModel",FitModelRoot::convolutionSinglePeakWithConstantPedestal,0.0,_initParams._hitPeriod,4);
+  _fitModel = TF1("fitModel",FitModelRoot::convolutionSinglePeakFloatingPedestal,0.0,_initParams._hitPeriod,4);
 }
 
 // Fills result using adc waveform data using either FindSinglePeak or LXPeakFit depending on the results of

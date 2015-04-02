@@ -1,7 +1,7 @@
-#include "TrkChargeReco/inc/FindMultiplePeak.hh"
+#include "TrkChargeReco/inc/ComboPeakFit.hh"
 #include <iostream>
 #include "TrkChargeReco/inc/FitModelRoot.hh"
-#include "TrkChargeReco/inc/FindPeakComparison.hh"
+//#include "TrkChargeReco/inc/FindPeakComparison.hh"
 #include "TF1.h"
 #include "TTree.h"
 #include "TFile.h"
@@ -22,7 +22,7 @@ void testSampleData()
 	treeData->SetBranchAddress("mcenergy",&mcenergy);
  	
 	// Choose processing object
-	FindSinglePeakWithoutTrunc peak(initParams);
+	ComboPeakFit peak(initParams);
 	
 	Int_t peakNum;
 	std::vector<Double_t> *peakHeight = new std::vector<Double_t>;
@@ -87,7 +87,7 @@ void testSampleData()
 
 
 
-void sampleGraph(const int num)
+/**void sampleGraph(const int num)
 {
  	// Load Sample Data 
 	TFile f("TrkChargeReco/test/protonData25ns_8.root");
@@ -150,4 +150,4 @@ void sampleGraph(const int num)
 		std::cout << "initialGuess peaktime : " << initialGuess[0]._peakTime << std::endl;
 
 		
-}
+}**/
