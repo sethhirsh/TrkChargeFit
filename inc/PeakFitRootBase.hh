@@ -19,7 +19,7 @@ class PeakFitRootBase : public PeakFitBase{
 
 		// Computes initial "guesses" for the resultant hit data
 		// This data is passed to all derived classes of PeakFitBaseRoot to compute initial parameters
-		// Calls findPeaks and earlyPeakAddPeak
+		// Calls findPeaks and addEarlyPeak
 		void initialPeakGuess(const adcWaveform adcData, resultantHitData &initialGuess);
 	
 	protected:
@@ -42,7 +42,7 @@ class PeakFitRootBase : public PeakFitBase{
                 // This function searches for another peak in the waveform data by subtracting out a dynamic pedestal 
                 // from the adc waveform and finding the maximum adc value in the "subtracted data".
                 // This function is applied when no peak is found in the explicit peak search (findPeaks).
-                void earlyPeakAddPeak(const TGraphErrors &gr, resultantHitData &initialGuess);
+                void addEarlyPeak(const TGraphErrors &gr, resultantHitData &initialGuess);
 	
 
 };

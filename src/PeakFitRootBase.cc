@@ -53,14 +53,14 @@ void PeakFitRootBase::initialPeakGuess(const adcWaveform adcData, resultantHitDa
 	// If there is only one peak and it is a dynamic pedestal
 	// search for and add another peak
 	if (numPeaks == 1 && initialGuess[0]._peakTime == 0.0){
-		earlyPeakAddPeak(_fitData, initialGuess);}
+		addEarlyPeak(_fitData, initialGuess);}
 }
 
 
 // This function searches for another peak in the waveform data by subtracting out a dynamic pedestal 
 // from the adc waveform and finding the maximum adc value in the "subtracted data".
 // This function is applied when no peak is found in the explicit peak search (findPeaks).
-void PeakFitRootBase::earlyPeakAddPeak(const TGraphErrors &gr, resultantHitData &initialGuess)
+void PeakFitRootBase::addEarlyPeak(const TGraphErrors &gr, resultantHitData &initialGuess)
 {	
 	// This maybe could be done using linear algebra vectors
 	// instead of arrays
